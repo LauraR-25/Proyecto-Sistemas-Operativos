@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseñador de Procedimientos - FIFO, LIFO y RR</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-tasks"></i> Diseñador de Procedimientos</h1>
+            <p class="subtitle">Implementación de FIFO, LIFO y Round Robin</p>
+        </header>
+
+        <div class="config-section">
+            <div class="input-group">
+                <label for="quantum"><i class="fas fa-clock"></i> Quantum para RR:</label>
+                <input type="number" id="quantum" value="3" min="1">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-file-csv"></i> Archivo de datos:</label>
+                <input type="file" id="fileInput" accept=".csv">
+                <button id="loadDefaultBtn" class="btn secondary">
+                    <i class="fas fa-download"></i> Usar datos por defecto
+                </button>
+            </div>
+            <button id="calculateBtn" class="btn primary">
+                <i class="fas fa-calculator"></i> Calcular los 3 Métodos
+            </button>
+        </div>
+
+        <div class="algorithms-container">
+            <!-- FIFO Section -->
+            <div class="algorithm-section" id="fifo-section">
+                <div class="algorithm-header">
+                    <h2><i class="fas fa-forward"></i> FIFO (First In, First Out)</h2>
+                    <div class="time-badge" id="fifo-time">Tiempo: -- ms</div>
+                </div>
+                <div class="process-table-container">
+                    <table id="fifo-table">
+                        <thead>
+                            <tr>
+                                <th>Proceso</th>
+                                <th>tᵢ</th>
+                                <th>t</th>
+                                <th>tf</th>
+                                <th>T</th>
+                                <th>E</th>
+                                <th>I</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fifo-body">
+                            <!-- Los datos se llenarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="summary" id="fifo-summary">
+                    <h3>Resumen FIFO</h3>
+                    <p>Promedio T: <span id="fifo-avg-T">--</span></p>
+                    <p>Promedio E: <span id="fifo-avg-E">--</span></p>
+                    <p>Promedio I: <span id="fifo-avg-I">--</span></p>
+                </div>
+                <div class="formulas">
+                    <h4><i class="fas fa-calculator"></i> Fórmulas FIFO:</h4>
+                    <p><strong>tf</strong> = tf(anterior) + t(actual)</p>
+                    <p><strong>T</strong> = tf - tᵢ</p>
+                    <p><strong>E</strong> = T - t</p>
+                    <p><strong>I</strong> = t / T</p>
+                </div>
+            </div>
+
+            <!-- LIFO Section -->
+            <div class="algorithm-section" id="lifo-section">
+                <div class="algorithm-header">
+                    <h2><i class="fas fa-backward"></i> LIFO (Last In, First Out)</h2>
+                    <div class="time-badge" id="lifo-time">Tiempo: -- ms</div>
+                </div>
+                <div class="process-table-container">
+                    <table id="lifo-table">
+                        <thead>
+                            <tr>
+                                <th>Proceso</th>
+                                <th>tᵢ</th>
+                                <th>t</th>
+                                <th>tf</th>
+                                <th>T</th>
+                                <th>E</th>
+                                <th>I</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lifo-body">
+                            <!-- Los datos se llenarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="summary" id="lifo-summary">
+                    <h3>Resumen LIFO</h3>
+                    <p>Promedio T: <span id="lifo-avg-T">--</span></p>
+                    <p>Promedio E: <span id="lifo-avg-E">--</span></p>
+                    <p>Promedio I: <span id="lifo-avg-I">--</span></p>
+                </div>
+                <div class="formulas">
+                    <h4><i class="fas fa-calculator"></i> Fórmulas LIFO:</h4>
+                    <p><strong>tf</strong> = Se calcula procesando del último al primero</p>
+                    <p><strong>T</strong> = tf - tᵢ</p>
+                    <p><strong>E</strong> = T - t</p>
+                    <p><strong>I</strong> = t / T</p>
+                </div>
+            </div>
+
+            <!-- RR Section -->
+            <div class="algorithm-section" id="rr-section">
+                <div class="algorithm-header">
+                    <h2><i class="fas fa-sync-alt"></i> Round Robin (RR)</h2>
+                    <div class="time-badge" id="rr-time">Tiempo: -- ms</div>
+                </div>
+                <div class="process-table-container">
+                    <table id="rr-table">
+                        <thead>
+                            <tr>
+                                <th>Proceso</th>
+                                <th>tᵢ</th>
+                                <th>t</th>
+                                <th>tf</th>
+                                <th>T</th>
+                                <th>E</th>
+                                <th>I</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rr-body">
+                            <!-- Los datos se llenarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="summary" id="rr-summary">
+                    <h3>Resumen RR</h3>
+                    <p>Promedio T: <span id="rr-avg-T">--</span></p>
+                    <p>Promedio E: <span id="rr-avg-E">--</span></p>
+                    <p>Promedio I: <span id="rr-avg-I">--</span></p>
+                </div>
+                <div class="formulas">
+                    <h4><i class="fas fa-calculator"></i> Fórmulas RR:</h4>
+                    <p><strong>Quantum (Q)</strong> = <span id="quantum-value">3</span></p>
+                    <p><strong>tf</strong> = Se calcula por ráfagas según Q</p>
+                    <p><strong>T</strong> = tf - tᵢ</p>
+                    <p><strong>E</strong> = T - t</p>
+                    <p><strong>I</strong> = t / T</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-section">
+            <h2><i class="fas fa-chart-bar"></i> Comparación de Métodos</h2>
+            <div class="comparison-grid">
+                <div class="comparison-card" id="best-t">
+                    <h3><i class="fas fa-tachometer-alt"></i> Mejor Tiempo Total (T)</h3>
+                    <p id="best-t-result">--</p>
+                </div>
+                <div class="comparison-card" id="best-e">
+                    <h3><i class="fas fa-clock"></i> Mejor Tiempo de Espera (E)</h3>
+                    <p id="best-e-result">--</p>
+                </div>
+                <div class="comparison-card" id="best-i">
+                    <h3><i class="fas fa-percentage"></i> Mejor Índice (I)</h3>
+                    <p id="best-i-result">--</p>
+                </div>
+                <div class="comparison-card" id="overall-best">
+                    <h3><i class="fas fa-trophy"></i> Mejor Método General</h3>
+                    <p id="overall-best-result">--</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-details">
+            <h2><i class="fas fa-info-circle"></i> Detalles del Procedimiento</h2>
+            <div class="details-tabs">
+                <button class="tab-btn active" data-tab="fifo-details">FIFO</button>
+                <button class="tab-btn" data-tab="lifo-details">LIFO</button>
+                <button class="tab-btn" data-tab="rr-details">RR</button>
+            </div>
+            <div class="details-content">
+                <div id="fifo-details" class="tab-content active">
+                    <h3>Procedimiento de Cálculo FIFO</h3>
+                    <p>1. Se ordenan los procesos por tiempo inicial (tᵢ) ascendente</p>
+                    <p>2. Para cada proceso en orden:</p>
+                    <p>(&nbsp;&nbsp;&nbsp;a) Si es el primer proceso: tf = tᵢ + t</p>
+                    <p>(&nbsp;&nbsp;&nbsp;b) Si no: tf = tf(anterior) + t(actual)</p>
+                    <p>3. Calcular T = tf - tᵢ</p>
+                    <p>4. Calcular E = T - t</p>
+                    <p>5. Calcular I = t / T</p>
+                </div>
+                <div id="lifo-details" class="tab-content">
+                    <h3>Procedimiento de Cálculo LIFO</h3>
+                    <p>1. Se ordenan los procesos por tiempo inicial (tᵢ) descendente</p>
+                    <p>2. Para cada proceso en orden:</p>
+                    <p>(&nbsp;&nbsp;&nbsp;a) Si es el primer proceso: tf = tᵢ + t</p>
+                    <p>(&nbsp;&nbsp;&nbsp;b) Si no: tf = tf(anterior) + t(actual)</p>
+                    <p>3. Calcular T = tf - tᵢ</p>
+                    <p>4. Calcular E = T - t</p>
+                    <p>5. Calcular I = t / T</p>
+                </div>
+                <div id="rr-details" class="tab-content">
+                    <h3>Procedimiento de Cálculo Round Robin</h3>
+                    <p>1. Se ordenan los procesos por tiempo inicial (tᵢ)</p>
+                    <p>2. Se crea una cola con los procesos listos</p>
+                    <p>3. Se ejecuta cada proceso por un quantum Q</p>
+                    <p>4. Si el proceso no termina, vuelve al final de la cola</p>
+                    <p>5. tf = tiempo cuando termina la última ráfaga</p>
+                    <p>6. Calcular T = tf - tᵢ</p>
+                    <p>7. Calcular E = T - t</p>
+                    <p>8. Calcular I = t / T</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagrams-section">
+            <h2><i class="fas fa-project-diagram"></i> Diagramas de Procesos</h2>
+            <div class="diagrams-container">
+                <div class="diagram">
+                    <h3>Diagrama FIFO</h3>
+                    <div class="diagram-content">
+                        <div class="process-flow">
+                            <div class="flow-step">Entrada</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Ordenar por tᵢ ↑</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Calcular tf</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Calcular T,E,I</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="diagram">
+                    <h3>Diagrama LIFO</h3>
+                    <div class="diagram-content">
+                        <div class="process-flow">
+                            <div class="flow-step">Entrada</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Ordenar por tᵢ ↓</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Calcular tf</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Calcular T,E,I</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="diagram">
+                    <h3>Diagrama RR</h3>
+                    <div class="diagram-content">
+                        <div class="process-flow">
+                            <div class="flow-step">Entrada</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Cola de listos</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Ejecutar Q</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Si no termina → Cola</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">Calcular T,E,I</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
